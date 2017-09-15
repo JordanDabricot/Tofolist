@@ -3,52 +3,55 @@
   <head>
     <meta charset="utf-8">
     <title>To Do List</title>
-    <script src="angular.min.js"></script>
-    <script type="text/javascript" src="controler.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
+    <script type="text/javascript" src="app/app.js"></script>
+    <script type="text/javascript" src="app/controllers/taskctrl.js"></script>
+    <script type="text/javascript" src="app/services/tasks.factory.js">
+
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="app/assets/styles.css">
   </head>
   <body>
-    <h1>To Do List</h1>
-    <hr>
-
-    <div ng-controller="TaskCtrl">
-    <input ng-model="taskName" type="text" placeholder="Entrer une tâche"/>
-    <button type="button" name="button" ng-click="addTask()">Ajouter tâche</button>
-    <button type="button" name="button" ng-click="deleteAll()">Supprimer toutes les tâches</button>
-
-    <!-- <button type="button" name="button" ng-init="toto = true" ng-click="toto = !toto">CLICK</button>
-
-
-    <div ng-show='toto'>
-      <h1>NG-SHOW</h1>
-    </div>
-
-    <div ng-hide='toto'>
-      <h1>NG-HIDE</h1>
-    </div>
-
-    <div ng-if='toto'>
-      <h1>NG-IF</h1>
-    </div> -->
-
-
-      <div ng-repeat="task in tasks">
-        <div class="tasks">
-          <table>
-            <tr>
-              <td></td>
-            </tr>
-            <label for="taskName">{{task.taskName}}</label>
-            <a ng-click="isFavorite($index)" ng-class="{'fa fa-star': task.favorit===false, 'fa fa-star-o': task.favorit===true}"></a>
-            <button type="button" name="button" ng-click="deleteTask($index)">Supprimer</button>
-          </table>
-
-          <input type="text" ng-model="subTaskName">
-          <button type="button" ng-click="addSubTask($index, subTaskName)">Ajouté sous tâche</button>
-          <ul ng-repeat="subtask in task.subtask track by $index">
-            <li>{{subtask}}</li>
-            <button type="button" ng-click="deleteSubTask($index, $parent.$index)">Supprimer</button>
-          </ul>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-offset-5 col-md-7">
+          <h1>To Do List</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-offset-4 col-md-8">
+          <div ng-controller="TaskCtrl">
+            <pre>{{tasks | json}}</pre>
+            <table>
+              <td>
+                <tr><input ng-model="task" type="text" placeholder="Entrer une tâche"/></tr>
+              </td>
+              <td>
+                <tr><button type="button" name="button" ng-click="addTask(task)">Ajouter tâche</button></tr>
+              </td>
+                <tr><button type="button" name="button" ng-click="deleteAll()">Supprimer toutes les tâches</button></tr>
+              </td>
+            </table>
+            <div ng-repeat="task in tasks">
+              <div class="tasks">
+                <table>
+                  <tr>
+                    <td></td>
+                  </tr>
+                  <label for="task">{{task.task}}</label>
+                  <a ng-click="isFavorite($index)" ng-class="{'fa fa-star fa-2x': task.favourite===true, 'fa fa-star-o fa-2x': task.favourite===false}"></a>
+                  <a ng-click="deleteTask($index)"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></a>
+                </table>
+                <input type="text" ng-model="subTaskName">
+                <button type="button" ng-click="addSubTask($index, subTaskName)">Ajouté sous tâche</button>
+                <ul ng-repeat="subTask in task.subTask track by $index">
+                  <li>{{subTask}}<a ng-click="deleteSubTask($index, $parent.$index)"><i class="fa fa-trash" aria-hidden="true"></i></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
